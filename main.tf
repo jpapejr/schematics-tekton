@@ -26,8 +26,15 @@ resource "null_resource" "addons" {
         kubectl apply --kubeconfig=${data.ibm_container_cluster_config.cluster_config.config_file_path} --filename https://storage.googleapis.com/tekton-releases/latest/release.yaml \
         && kubectl apply --kubeconfig=${data.ibm_container_cluster_config.cluster_config.config_file_path} --filename https://github.com/tektoncd/dashboard/releases/download/v0.1.1/release.yaml \
         && sleep 20 \
-        && kubectl get pods --namespace tekton-pipelines \
-        && kubectl get svc --namespace tekton-pipelines
+        && kubectl get pods --kubeconfig=${data.ibm_container_cluster_config.cluster_config.config_file_path}  --namespace tekton-pipelines \
+        && kubectl get svc --kubeconfig=${data.ibm_container_cluster_config.cluster_config.config_file_path} --namespace tekton-pipelines \
+        && echo \
+        && echo \
+        && echo "To uninstall this run the following:" \
+        && echo "---------------------------------------------------------------------------------------------" \
+        && echo "kubectl delete -f https://github.com/tektoncd/dashboard/releases/download/v0.1.1/release.yaml" \
+        && echo "kubectl delete -f https://storage.googleapis.com/tekton-releases/latest/release.yaml" \
+        && echo "---------------------------------------------------------------------------------------------"
         EOT
     }
 #   depends_on = ["ibm_container_cluster_config.cluster_config"]
