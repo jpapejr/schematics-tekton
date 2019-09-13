@@ -24,7 +24,7 @@ resource "null_resource" "addons" {
         }
         command = <<EOT
         kubectl apply --kubeconfig=${data.ibm_container_cluster_config.cluster_config.config_file_path} --filename https://storage.googleapis.com/tekton-releases/latest/release.yaml \
-        && kubectl apply--kubeconfig=${data.ibm_container_cluster_config.cluster_config.config_file_path} --filename https://github.com/tektoncd/dashboard/releases/download/v0.1.1/release.yaml \
+        && kubectl apply --kubeconfig=${data.ibm_container_cluster_config.cluster_config.config_file_path} --filename https://github.com/tektoncd/dashboard/releases/download/v0.1.1/release.yaml \
         && sleep 20 \
         && kubectl get pods --namespace tekton-pipelines \
         && kubectl get svc --namespace tekton-pipelines
